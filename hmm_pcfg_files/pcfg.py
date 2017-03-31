@@ -17,7 +17,5 @@ s = nltk.data.load('hmm_pcfg_files/pcfg', 'text')
 
 with open('hmm_pcfg_files/parses/candidate-parses', 'w') as f:
     for sentence in test_sent:
-
-        output = " ".join([tag[1] for tag in tag_sequence])
         f.write(output+"\n")
     f.close()
