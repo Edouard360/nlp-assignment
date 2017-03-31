@@ -33,37 +33,30 @@ for i, rule in enumerate(arabic_pcfg):
 
 distinct_words.symmetric_difference(distinct_words_from_pcfg)
 arabic_pcfg = "\n".join(arabic_pcfg)
-nltk_pcfg = nltk.PCFG.fromstring(arabic_pcfg)
+grammar = nltk.PCFG.fromstring(arabic_pcfg)
 
 test_sent = read_from_file("dev_sents")
 test_sent = [test[0].split(" ") for test in test_sent]
 
-from nltk import parse
+from nltk import parse, pchart
 
-parser = parse.RecursiveDescentParser(nltk_pcfg, trace=2)
+parser = parse.RecursiveDescentParser(grammar, trace=2)
 
+# for p in parser.parse(test_sent[0]):
+#     print(p)
 
-for p in parser.parse(test_sent[2]):
+pchart_parser = pchart.RandomChartParser(grammar)
+
+for p in pchart_parser.parse(test_sent[0]):
     print(p)
 
-list(parser.parse(test))
-output = " ".join([str(p) for p in parser.parse(test)])
-
-for p in parser.parse(test):
-    print(str(p))
-
-# Not working aon
-with open('parses/candidate_parses', 'w') as f:
-    for sentence in test_sent:
-        output = " ".join([p for p in parser.parse(test_sent)])
-        f.write(output + "\n")
-    f.close()
-
-from nltk import Tree, ProbabilisticTree
-
-# Demonstrate tree parsing.
-s = '(S (NP (DT the) (NN cat)) (VP (VBD ate) (NP (DT a) (NN cookie))))'
-t = Tree.fromstring(s)
-print("Convert bracketed string into tree:")
-print(t)
-print(t.__repr__())
+#
+# list(parser.parse(test))
+# output = " ".join([str(p) for p in parser.parse(test)])
+#
+# # Not working aon
+# with open('parses/candidate_parses', 'w') as f:
+#     for sentence in test_sent:
+#         output = " ".join([p for p in parser.parse(test_sent)])
+#         f.write(output + "\n")
+#     f.close()
