@@ -45,9 +45,10 @@ parser = parse.RecursiveDescentParser(grammar, trace=2)
 # for p in parser.parse(test_sent[0]):
 #     print(p)
 
-pchart_parser = pchart.RandomChartParser(grammar)
+random_parser = pchart.RandomChartParser(grammar)
+inside_parser = pchart.InsideChartParser(grammar)
 
-for p in pchart_parser.parse(test_sent[0]):
+for p in inside_parser.parse(test_sent[0]):
     print(p)
 
 #
